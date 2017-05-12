@@ -1,0 +1,47 @@
+comment	"//" ;
+comment	"/*" "*/" ;
+
+Prog.	Program ::= [Stmt] ;
+terminator	Stmt "" ;
+separator Exp "," ;
+separator Dec "," ;
+
+SVarDef.	Stmt ::= Dec ";" ;
+SFunDef.	Stmt ::= Dec "(" [Dec] ")" Stmt ;
+SWhile.	Stmt ::= "while" "(" Exp ")" Stmt ;
+SIf.	Stmt ::= "if" "(" Exp ")" Stmt ;
+SPrint.	Stmt ::= "print" "(" Exp ")" ";" ;
+SBlock.  Stmt ::= "{" [Stmt] "}" ;
+SExpStmt.	Stmt ::= Exp ";" ;
+SAss.		Stmt ::= Id "=" Exp ";" ;
+SReturn.	Stmt ::= "return" Exp ";" ;
+
+EILit.		Exp8 ::= Integer ;
+ETrue.		Exp8 ::= "true" ;
+EFalse.		Exp8 ::= "false" ;
+EVar.		Exp8 ::= Id ;
+EApp.		Exp8 ::= Id "(" [Exp] ")" ;
+EIncr.		Exp7 ::= Exp8 "++" ;
+EDecr.		Exp7 ::= Exp8 "--" ;
+EMul.		Exp6 ::= Exp6 "*" Exp7 ;
+EDiv.		Exp6 ::= Exp6 "/" Exp7 ;
+EPlus.		Exp5 ::= Exp5 "+" Exp6 ;
+EMinus.		Exp5 ::= Exp5 "-" Exp6 ;
+ELT.		Exp4 ::= Exp4 "<" Exp5 ;
+ELEq.		Exp4 ::= Exp4 "<=" Exp5 ;
+EGT.		Exp4 ::= Exp4 ">" Exp5 ;
+EGEq.		Exp4 ::= Exp4 ">=" Exp5 ;
+EEq.		Exp3 ::= Exp3 "==" Exp4 ;
+ENEq.		Exp3 ::= Exp3 "!=" Exp4 ;
+EAnd.		Exp2 ::= Exp2 "&&" Exp3 ;
+EOr.		Exp1 ::= Exp1 "||" Exp2 ;
+
+coercions Exp 8 ;
+
+Tbool.	Type ::= "bool" ;
+Tint.	Type ::= "int" ;
+Tvoid.	Type ::= "void" ;
+
+Decl.	Dec ::= Type Id ;
+
+token Id (letter (letter | digit | '_')*) ;
